@@ -15,7 +15,7 @@ Structured diffing of Kotlin data classes and maps with change tracking.
 
 ```kotlin
 dependencies {
-    implementation("com.philiprehberger:diff-kit:0.1.0")
+    implementation("com.philiprehberger:diff-kit:0.2.0")
 }
 ```
 
@@ -23,7 +23,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.philiprehberger:diff-kit:0.1.0'
+    implementation 'com.philiprehberger:diff-kit:0.2.0'
 }
 ```
 
@@ -33,7 +33,7 @@ dependencies {
 <dependency>
     <groupId>com.philiprehberger</groupId>
     <artifactId>diff-kit</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -78,6 +78,100 @@ val result = diff(old, new) {
 }
 ```
 
+### Wildcard Pattern Exclusion
+
+Exclude fields using wildcard patterns with `*`:
+
+```kotlin
+val result = diff(old, new) {
+    // Exclude all "metadata" sub-fields
+    exclude("metadata.*")
+
+    // Exclude "updatedAt" at any depth
+    exclude("*.updatedAt")
+}
+```
+
+### Custom Comparators
+
+Supply custom comparators for specific field paths:
+
+```kotlin
+val result = diff(old, new) {
+    // Case-insensitive string comparison for the "name" field
+    comparator("name", Comparator { a, b ->
+        (a as String).lowercase().compareTo((b as String).lowercase())
+    })
+
+    // Numeric tolerance for floating-point fields
+    comparator("value", Comparator { a, b ->
+        val diff = (a as Double) - (b as Double)
+        if (kotlin.math.abs(diff) < 0.01) 0 else diff.compareTo(0.0)
+    })
+}
+```
+
+### List Element-Level Diffing
+
+Lists are compared element by element, showing individual additions, removals, and changes with their indices:
+
+```kotlin
+data class Item(val id: Int, val value: String)
+data class Container(val items: List<Item>)
+
+val old = Container(listOf(Item(1, "a"), Item(2, "b")))
+val new = Container(listOf(Item(1, "a"), Item(2, "updated"), Item(3, "c")))
+
+val result = diff(old, new)
+// items[1].value: b -> updated
+// items[2]: added Item(id=3, value=c)
+```
+
+### Set Diffing
+
+Sets are compared for added and removed elements:
+
+```kotlin
+data class TaggedItem(val name: String, val tags: Set<String>)
+
+val old = TaggedItem("item", setOf("a", "b"))
+val new = TaggedItem("item", setOf("b", "c"))
+
+val result = diff(old, new)
+// tags: removed a
+// tags: added c
+```
+
+### Diff Summary
+
+Get counts of changes by type:
+
+```kotlin
+val result = diff(old, new)
+val summary = result.summary()
+println(summary.added)   // number of additions
+println(summary.removed) // number of removals
+println(summary.changed) // number of modifications
+println(summary.total)   // total count
+```
+
+You can also call `summary()` on any `List<Change>`:
+
+```kotlin
+val summary = result.changes.summary()
+```
+
+### Patch Map
+
+Convert a diff result into a map of just the changed values:
+
+```kotlin
+val patch = diff(old, new).toPatchMap()
+// e.g., { "age" to 31, "email" to "alice@new.com" }
+```
+
+Removed fields appear with `null` values, added and changed fields contain the new value.
+
 ### Map Diffing
 
 ```kotlin
@@ -99,8 +193,14 @@ println(result.changed) // {b=(2, 20)}
 | `DiffResult` | Contains the list of `Change` objects |
 | `DiffResult.hasChanges()` | Returns true if any differences were found |
 | `DiffResult.changedPaths()` | Returns the list of changed property paths |
-| `Change` | A single property change with path, oldValue, newValue |
-| `DiffConfig.exclude()` | Excludes specified fields from comparison |
+| `DiffResult.summary()` | Returns a `DiffSummary` with add/remove/change counts |
+| `DiffResult.toPatchMap()` | Converts changes to a `Map<String, Any?>` of new values |
+| `Change` | A single change with path, oldValue, newValue, and type |
+| `ChangeType` | Enum: `CHANGED`, `ADDED`, `REMOVED` |
+| `DiffSummary` | Counts: `added`, `removed`, `changed`, `total` |
+| `DiffConfig.exclude()` | Excludes fields by name or wildcard pattern |
+| `DiffConfig.comparator()` | Registers a custom comparator for a field path |
+| `List<Change>.summary()` | Extension to produce a `DiffSummary` from any change list |
 | `MapDiffResult` | Contains added, removed, and changed map entries |
 
 ## Development
