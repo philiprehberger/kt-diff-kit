@@ -5,22 +5,22 @@ package com.philiprehberger.diffkit
  *
  * @property changes the list of individual changes found
  */
-data class DiffResult(val changes: List<Change>) {
+public data class DiffResult(public val changes: List<Change>) {
 
     /**
      * Returns true if there are any changes between the compared objects.
      */
-    fun hasChanges(): Boolean = changes.isNotEmpty()
+    public fun hasChanges(): Boolean = changes.isNotEmpty()
 
     /**
      * Returns a list of all changed property paths.
      */
-    fun changedPaths(): List<String> = changes.map { it.path }
+    public fun changedPaths(): List<String> = changes.map { it.path }
 
     /**
      * Returns a [DiffSummary] with counts of added, removed, and changed entries.
      */
-    fun summary(): DiffSummary = changes.summary()
+    public fun summary(): DiffSummary = changes.summary()
 
     /**
      * Converts the diff result into a patch map containing only the new values
@@ -33,7 +33,7 @@ data class DiffResult(val changes: List<Change>) {
      * // e.g., { "age" to 31, "email" to "alice@new.com" }
      * ```
      */
-    fun toPatchMap(): Map<String, Any?> {
+    public fun toPatchMap(): Map<String, Any?> {
         val patch = mutableMapOf<String, Any?>()
         for (change in changes) {
             when (change.type) {

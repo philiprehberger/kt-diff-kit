@@ -5,7 +5,7 @@ package com.philiprehberger.diffkit
  *
  * Allows excluding certain fields from comparison and providing custom comparators.
  */
-class DiffConfig {
+public class DiffConfig {
     internal val excludedFields = mutableSetOf<String>()
     internal val excludedPatterns = mutableListOf<String>()
     internal val comparators = mutableMapOf<String, Comparator<Any?>>()
@@ -21,7 +21,7 @@ class DiffConfig {
      *
      * @param fields the property names or patterns to exclude
      */
-    fun exclude(vararg fields: String) {
+    public fun exclude(vararg fields: String) {
         for (field in fields) {
             if (field.contains('*')) {
                 excludedPatterns.add(field)
@@ -49,7 +49,7 @@ class DiffConfig {
      * @param path the dot-separated field path
      * @param comparator the comparator to use for values at this path
      */
-    fun comparator(path: String, comparator: Comparator<Any?>) {
+    public fun comparator(path: String, comparator: Comparator<Any?>) {
         comparators[path] = comparator
     }
 

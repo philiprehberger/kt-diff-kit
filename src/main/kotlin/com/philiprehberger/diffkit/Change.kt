@@ -3,7 +3,7 @@ package com.philiprehberger.diffkit
 /**
  * The type of change detected.
  */
-enum class ChangeType {
+public enum class ChangeType {
     /** A value was modified from one value to another. */
     CHANGED,
     /** A new value was added (e.g., list element, set element). */
@@ -20,11 +20,11 @@ enum class ChangeType {
  * @property newValue the value in the modified object
  * @property type the type of change (CHANGED, ADDED, or REMOVED)
  */
-data class Change(
-    val path: String,
-    val oldValue: Any?,
-    val newValue: Any?,
-    val type: ChangeType = ChangeType.CHANGED
+public data class Change(
+    public val path: String,
+    public val oldValue: Any?,
+    public val newValue: Any?,
+    public val type: ChangeType = ChangeType.CHANGED
 ) {
     override fun toString(): String = when (type) {
         ChangeType.ADDED -> "$path: added $newValue"
