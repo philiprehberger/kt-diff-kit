@@ -1,13 +1,10 @@
-# kt-diff-kit
+# diff-kit
 
 [![CI](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.philiprehberger/diff-kit)](https://central.sonatype.com/artifact/com.philiprehberger/diff-kit)
+[![License](https://img.shields.io/github/license/philiprehberger/kt-diff-kit)](LICENSE)
 
 Structured diffing of Kotlin data classes and maps with change tracking.
-
-## Requirements
-
-- Kotlin 1.9+ / Java 17+
 
 ## Installation
 
@@ -15,7 +12,7 @@ Structured diffing of Kotlin data classes and maps with change tracking.
 
 ```kotlin
 dependencies {
-    implementation("com.philiprehberger:diff-kit:0.2.0")
+    implementation("com.philiprehberger:diff-kit:0.2.2")
 }
 ```
 
@@ -33,7 +30,7 @@ dependencies {
 <dependency>
     <groupId>com.philiprehberger</groupId>
     <artifactId>diff-kit</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.2</version>
 </dependency>
 ```
 
