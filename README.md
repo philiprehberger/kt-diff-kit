@@ -1,6 +1,6 @@
 # diff-kit
 
-[![CI](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml)
+[![Tests](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.philiprehberger/diff-kit)](https://central.sonatype.com/artifact/com.philiprehberger/diff-kit)
 [![License](https://img.shields.io/github/license/philiprehberger/kt-diff-kit)](LICENSE)
 
@@ -11,17 +11,7 @@ Structured diffing of Kotlin data classes and maps with change tracking.
 ### Gradle (Kotlin DSL)
 
 ```kotlin
-dependencies {
-    implementation("com.philiprehberger:diff-kit:0.2.2")
-}
-```
-
-### Gradle (Groovy)
-
-```groovy
-dependencies {
-    implementation 'com.philiprehberger:diff-kit:0.2.0'
-}
+implementation("com.philiprehberger:diff-kit:0.2.2")
 ```
 
 ### Maven
