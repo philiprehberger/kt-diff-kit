@@ -11,7 +11,7 @@ Structured diffing of Kotlin data classes and maps with change tracking.
 ### Gradle (Kotlin DSL)
 
 ```kotlin
-implementation("com.philiprehberger:diff-kit:0.2.2")
+implementation("com.philiprehberger:diff-kit:0.2.4")
 ```
 
 ### Maven
@@ -20,7 +20,7 @@ implementation("com.philiprehberger:diff-kit:0.2.2")
 <dependency>
     <groupId>com.philiprehberger</groupId>
     <artifactId>diff-kit</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.4</version>
 </dependency>
 ```
 

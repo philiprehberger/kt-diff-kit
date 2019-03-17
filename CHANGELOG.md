@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.4 (2026-03-22)
+
+- Fix README version references
+
 ## 0.2.3 (2026-03-20)
 
 - Fix README: remove Groovy section, update badge label to "Tests"
