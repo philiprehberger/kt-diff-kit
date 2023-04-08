@@ -45,6 +45,19 @@ public data class DiffResult(public val changes: List<Change>) {
     }
 
     /**
+     * Returns a list of human-readable change descriptions.
+     *
+     * @return a list of descriptive strings for each change
+     */
+    public fun humanReadable(): List<String> = changes.map { change ->
+        when (change.type) {
+            ChangeType.ADDED -> "'${change.path}' was added with value ${change.newValue}"
+            ChangeType.REMOVED -> "'${change.path}' was removed (was ${change.oldValue})"
+            ChangeType.CHANGED -> "'${change.path}' changed from ${change.oldValue} to ${change.newValue}"
+        }
+    }
+
+    /**
      * Returns a human-readable summary of all changes.
      */
     override fun toString(): String {
