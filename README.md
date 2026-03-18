@@ -1,6 +1,6 @@
 # kt-diff-kit
 
-[![CI](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-diff-kit/actions/workflows/publish.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.philiprehberger/diff-kit)](https://central.sonatype.com/artifact/com.philiprehberger/diff-kit)
 
 Structured diffing of Kotlin data classes and maps with change tracking.
