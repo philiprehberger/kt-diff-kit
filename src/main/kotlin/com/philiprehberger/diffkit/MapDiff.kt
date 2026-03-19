@@ -9,15 +9,15 @@ package com.philiprehberger.diffkit
  * @property removed entries present in the old map but not the new
  * @property changed entries present in both maps with different values
  */
-data class MapDiffResult<K, V>(
-    val added: Map<K, V>,
-    val removed: Map<K, V>,
-    val changed: Map<K, Pair<V, V>>
+public data class MapDiffResult<K, V>(
+    public val added: Map<K, V>,
+    public val removed: Map<K, V>,
+    public val changed: Map<K, Pair<V, V>>
 ) {
     /**
      * Returns true if there are any differences between the maps.
      */
-    fun hasChanges(): Boolean = added.isNotEmpty() || removed.isNotEmpty() || changed.isNotEmpty()
+    public fun hasChanges(): Boolean = added.isNotEmpty() || removed.isNotEmpty() || changed.isNotEmpty()
 }
 
 /**
@@ -37,7 +37,7 @@ data class MapDiffResult<K, V>(
  * @param new the modified map
  * @return a [MapDiffResult] with added, removed, and changed entries
  */
-fun <K, V> diffMaps(old: Map<K, V>, new: Map<K, V>): MapDiffResult<K, V> {
+public fun <K, V> diffMaps(old: Map<K, V>, new: Map<K, V>): MapDiffResult<K, V> {
     val added = mutableMapOf<K, V>()
     val removed = mutableMapOf<K, V>()
     val changed = mutableMapOf<K, Pair<V, V>>()

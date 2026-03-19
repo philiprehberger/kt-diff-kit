@@ -21,7 +21,7 @@ import kotlin.reflect.full.memberProperties
  * @param config optional configuration block for excluding fields and adding comparators
  * @return a [DiffResult] containing all detected changes
  */
-fun <T : Any> diff(old: T, new: T, config: DiffConfig.() -> Unit = {}): DiffResult {
+public fun <T : Any> diff(old: T, new: T, config: DiffConfig.() -> Unit = {}): DiffResult {
     val diffConfig = DiffConfig().apply(config)
     val changes = mutableListOf<Change>()
     compareObjects(old, new, "", diffConfig, changes)

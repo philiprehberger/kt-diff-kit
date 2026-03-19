@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "2.0.21"
     `maven-publish`
     signing
 }
@@ -21,6 +21,7 @@ tasks.test {
 }
 
 kotlin {
+    explicitApi()
     jvmToolchain(17)
 }
 
@@ -43,6 +44,10 @@ publishing {
                     url.set("https://github.com/philiprehberger/kt-diff-kit")
                     connection.set("scm:git:git://github.com/philiprehberger/kt-diff-kit.git")
                     developerConnection.set("scm:git:ssh://github.com/philiprehberger/kt-diff-kit.git")
+                }
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("https://github.com/philiprehberger/kt-diff-kit/issues")
                 }
             }
         }
