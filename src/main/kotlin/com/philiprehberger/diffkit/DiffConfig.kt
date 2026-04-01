@@ -54,6 +54,17 @@ public class DiffConfig {
     }
 
     /**
+     * Excludes specific full paths from the comparison.
+     *
+     * Unlike [exclude] which matches leaf names and patterns, this matches exact full paths only.
+     *
+     * @param paths the exact dot-separated paths to ignore
+     */
+    public fun ignorePaths(vararg paths: String) {
+        excludedFields.addAll(paths)
+    }
+
+    /**
      * Checks whether a given field path should be excluded based on exact names or patterns.
      */
     internal fun isExcluded(path: String): Boolean {

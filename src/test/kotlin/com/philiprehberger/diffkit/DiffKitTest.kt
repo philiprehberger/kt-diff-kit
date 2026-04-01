@@ -438,4 +438,60 @@ class DiffKitTest {
         val patch = diff(obj, obj.copy()).toPatchMap()
         assertTrue(patch.isEmpty())
     }
+
+    @Test
+    fun `ignorePaths excludes exact paths`() {
+        data class Config(val host: String, val port: Int, val secret: String)
+        val result = diff(
+            Config("localhost", 8080, "old-secret"),
+            Config("localhost", 9090, "new-secret")
+        ) {
+            ignorePaths("secret")
+        }
+        assertEquals(1, result.changes.size)
+        assertEquals("port", result.changes[0].path)
+    }
+
+    @Test
+    fun `humanReadable generates descriptions`() {
+        data class Item(val name: String, val price: Int)
+        val result = diff(Item("Widget", 10), Item("Widget", 20))
+        val readable = result.humanReadable()
+        assertEquals(1, readable.size)
+        assertTrue(readable[0].contains("changed from"))
+        assertTrue(readable[0].contains("10"))
+        assertTrue(readable[0].contains("20"))
+    }
+
+    @Test
+    fun `humanReadable for added items`() {
+        data class Container(val items: List<String>)
+        val result = diff(Container(listOf("a")), Container(listOf("a", "b")))
+        val readable = result.humanReadable()
+        assertTrue(readable.any { it.contains("added") })
+    }
+
+    @Test
+    fun `applyPatch applies changes to map`() {
+        val original = mapOf("name" to "Alice" as Any?, "age" to 30 as Any?)
+        val changes = DiffResult(listOf(
+            Change("age", 30, 31, ChangeType.CHANGED),
+            Change("email", null, "alice@test.com", ChangeType.ADDED)
+        ))
+        val patched = applyPatch(original, changes)
+        assertEquals(31, patched["age"])
+        assertEquals("alice@test.com", patched["email"])
+        assertEquals("Alice", patched["name"])
+    }
+
+    @Test
+    fun `applyPatch removes entries`() {
+        val original = mapOf("name" to "Alice" as Any?, "temp" to "value" as Any?)
+        val changes = DiffResult(listOf(
+            Change("temp", "value", null, ChangeType.REMOVED)
+        ))
+        val patched = applyPatch(original, changes)
+        assertFalse(patched.containsKey("temp"))
+        assertEquals("Alice", patched["name"])
+    }
 }

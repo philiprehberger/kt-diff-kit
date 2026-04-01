@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 (2026-03-31)
+
+- Add `ignorePaths()` for excluding specific paths from comparison
+- Add `humanReadable()` to generate descriptive change summaries
+- Add `applyPatch()` to apply a diff result to a map
+
 ## 0.2.5 (2026-03-31)
 
 - Standardize README to 3-badge format with emoji Support section

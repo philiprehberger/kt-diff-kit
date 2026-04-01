@@ -11,7 +11,7 @@ Structured diffing of Kotlin data classes and maps with change tracking.
 ### Gradle (Kotlin DSL)
 
 ```kotlin
-implementation("com.philiprehberger:diff-kit:0.2.4")
+implementation("com.philiprehberger:diff-kit:0.3.0")
 ```
 
 ### Maven
@@ -20,7 +20,7 @@ implementation("com.philiprehberger:diff-kit:0.2.4")
 <dependency>
     <groupId>com.philiprehberger</groupId>
     <artifactId>diff-kit</artifactId>
-    <version>0.2.4</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -171,6 +171,30 @@ println(result.removed) // {a=1}
 println(result.changed) // {b=(2, 20)}
 ```
 
+### Ignore Specific Paths
+
+```kotlin
+val result = diff(oldConfig, newConfig) {
+    ignorePaths("secret", "password", "internal.token")
+}
+```
+
+### Human-Readable Changes
+
+```kotlin
+val result = diff(oldUser, newUser)
+result.humanReadable().forEach { println(it) }
+// 'name' changed from Alice to Bob
+// 'age' changed from 30 to 31
+```
+
+### Apply Patch
+
+```kotlin
+val original = mapOf("name" to "Alice", "age" to 30)
+val patched = applyPatch(original, diffResult)
+```
+
 ## API
 
 | Class / Function | Description |
@@ -186,6 +210,9 @@ println(result.changed) // {b=(2, 20)}
 | `ChangeType` | Enum: `CHANGED`, `ADDED`, `REMOVED` |
 | `DiffSummary` | Counts: `added`, `removed`, `changed`, `total` |
 | `DiffConfig.exclude()` | Excludes fields by name or wildcard pattern |
+| `DiffConfig.ignorePaths()` | Exclude exact paths from comparison |
+| `DiffResult.humanReadable()` | Generate human-readable change descriptions |
+| `applyPatch(map, diff)` | Apply diff changes to a map |
 | `DiffConfig.comparator()` | Registers a custom comparator for a field path |
 | `List<Change>.summary()` | Extension to produce a `DiffSummary` from any change list |
 | `MapDiffResult` | Contains added, removed, and changed map entries |
